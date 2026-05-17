@@ -1,0 +1,20 @@
+package service;
+import model.*; import util.FileUtil; import java.io.*; import java.util.*;
+public class UserService{
+ private static final String FILE=FileUtil.path("users.txt"); private static final String HEAD_USERNAME="SadeepLakshan"; private static final String HEAD_PASSWORD="2004";
+ public User getHeadAdmin(){return new AdminUser("A001",HEAD_USERNAME,"headadmin@lankatrails.com",HEAD_PASSWORD,"Admin","HEAD_ADMIN","2004XXXXV","0717331406");}
+ public boolean isHeadAdminCredential(String u,String p){return HEAD_USERNAME.equals(u)&&HEAD_PASSWORD.equals(p);} public boolean isValidEmail(String e){return e!=null&&e.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");}
+ public List<User> getAllUsers(){List<User> list=new ArrayList<>(); File f=new File(FILE); if(!f.exists())return list; try(BufferedReader br=new BufferedReader(new FileReader(FILE))){String line; while((line=br.readLine())!=null){String[] d=line.split(",",-1); if(d.length>=6){ String nic=d.length>6?d[6]:""; String tel=d.length>7?d[7]:""; if(d[5].equals("SUB_ADMIN"))list.add(new AdminUser(d[0],d[1],d[2],d[3],d[4],d[5],nic,tel)); else list.add(new CustomerUser(d[0],d[1],d[2],d[3],d[4],nic,tel)); }}}catch(Exception e){e.printStackTrace();} return list;}
+ public List<User> getCustomers(){List<User> out=new ArrayList<>(); for(User u:getAllUsers()) if(u.getRole().equals("CUSTOMER")) out.add(u); return out;}
+ public List<User> getSubAdmins(){List<User> out=new ArrayList<>(); for(User u:getAllUsers()) if(u.getRole().equals("SUB_ADMIN")) out.add(u); return out;}
+ public boolean duplicateUsername(String username){if(HEAD_USERNAME.equalsIgnoreCase(username))return true; for(User u:getAllUsers()) if(u.getUsername().equalsIgnoreCase(username))return true; return false;}
+ public boolean duplicateEmail(String email){for(User u:getAllUsers()) if(u.getEmail().equalsIgnoreCase(email))return true; return false;}
+ public boolean registerCustomer(User u){if(!isValidEmail(u.getEmail())||duplicateUsername(u.getUsername())||duplicateEmail(u.getEmail()))return false; return append(u.toFileString());}
+ public boolean registerSubAdmin(User u){if(!isValidEmail(u.getEmail())||duplicateUsername(u.getUsername())||duplicateEmail(u.getEmail()))return false; return append(u.toFileString());}
+ private boolean append(String line){try(BufferedWriter bw=new BufferedWriter(new FileWriter(FILE,true))){bw.write(line);bw.newLine();return true;}catch(Exception e){e.printStackTrace();return false;}}
+ public User login(String username,String password){if(isHeadAdminCredential(username,password))return getHeadAdmin(); for(User u:getAllUsers()) if(u.authenticate(username,password))return u; return null;}
+ public User getUserById(String id){if("A001".equals(id))return getHeadAdmin(); for(User u:getAllUsers())if(u.getId().equals(id))return u; return null;}
+ public boolean updateUser(User updated){if("A001".equals(updated.getId()))return false; if(!isValidEmail(updated.getEmail()))return false; List<User> users=getAllUsers(); try(BufferedWriter bw=new BufferedWriter(new FileWriter(FILE))){for(User u:users){bw.write(u.getId().equals(updated.getId())?updated.toFileString():u.toFileString());bw.newLine();}return true;}catch(Exception e){e.printStackTrace();return false;}}
+ public boolean deleteUser(String id, boolean isHeadAdmin){if("A001".equals(id))return false; List<User> users=getAllUsers(); try(BufferedWriter bw=new BufferedWriter(new FileWriter(FILE))){for(User u:users){if(u.getId().equals(id)){ if(u.getRole().equals("SUB_ADMIN")&&!isHeadAdmin){bw.write(u.toFileString());bw.newLine();} }else{bw.write(u.toFileString());bw.newLine();}}return true;}catch(Exception e){e.printStackTrace();return false;}}
+ public List<User> search(String keyword, String role){List<User> out=new ArrayList<>(); if(keyword==null)keyword=""; keyword=keyword.toLowerCase(); for(User u:getAllUsers()){boolean roleOk=role==null||role.isEmpty()||u.getRole().equals(role); boolean hit=u.getId().toLowerCase().contains(keyword)||u.getUsername().toLowerCase().contains(keyword)||u.getEmail().toLowerCase().contains(keyword); if(roleOk&&hit)out.add(u);} return out;}
+}

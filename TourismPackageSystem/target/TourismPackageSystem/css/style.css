@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    /* Booking.com Theme Colors */
+    --primary: #003580;       /* Dark Blue */
+    --primary-light: #0054a6; /* Lighter Blue */
+    --secondary: #0071c2;     /* Bright Blue (Buttons/Links) */
+    --accent: #febb02;        /* Bright Yellow */
+    --accent-hover: #e0a800;  
+    --success: #008234;       
+    --danger: #d9534f;
+    --background: #f5f5f5;
+    --surface: #FFFFFF;
+    --text-main: #333333;
+    --text-muted: #6b6b6b;
+    --border-color: #e7e7e7;
+    --radius-md: 4px;         /* Booking uses sharper corners */
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --transition: all 0.2s ease-in-out;
+}
+
+body {
+    background-color: var(--background);
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Typography */
+.brand {
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    font-size: 1.5rem;
+    color: white !important;
+}
+
+.system-heading {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 10px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.section-title {
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 24px;
+}
+
+/* Navigation */
+.navbar {
+    background: var(--primary) !important;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Booking Style Hero Section */
+.hero-booking {
+    background: linear-gradient(rgba(0, 53, 128, 0.7), rgba(0, 53, 128, 0.9)), url('../images/hero-bg.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 60px 0 100px 0; /* Extra padding at bottom for overlap */
+    position: relative;
+}
+
+.hero-booking h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.hero-booking p.lead {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Iconic Yellow Search Bar */
+.booking-search-bar {
+    background: var(--accent);
+    padding: 4px;
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    margin-top: -30px; /* Overlaps the hero section */
+    position: relative;
+    z-index: 10;
+}
+
+.booking-search-bar .inner-form {
+    background: transparent;
+    display: flex;
+    gap: 4px;
+}
+
+.booking-search-bar .form-control {
+    border: none;
+    border-radius: 2px;
+    padding: 14px 16px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.booking-search-bar .form-control:focus {
+    box-shadow: inset 0 0 0 2px var(--secondary);
+}
+
+.booking-search-bar .input-group-text {
+    background: white;
+    border: none;
+    border-radius: 2px 0 0 2px;
+    color: var(--text-muted);
+}
+
+.booking-btn {
+    background: var(--secondary);
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 2px;
+    padding: 12px 32px;
+    transition: var(--transition);
+}
+
+.booking-btn:hover {
+    background: #005f99;
+    color: white;
+}
+
+/* Cards & Surfaces */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+/* Destination Cards */
+.dest-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    height: 250px;
+}
+
+.dest-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.dest-card:hover img {
+    transform: scale(1.05);
+}
+
+.dest-card .overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 20px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
+    color: white;
+}
+
+.dest-card h3 {
+    font-weight: 800;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Sidebar */
+.sidebar {
+    background: white;
+    border: 1px solid var(--border-color);
+    min-height: calc(100vh - 160px);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    color: var(--text-main);
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    margin-bottom: 8px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.sidebar a i {
+    margin-right: 12px;
+    color: var(--text-muted);
+}
+
+.sidebar a:hover, .sidebar a.active {
+    background: #f0f6ff;
+    color: var(--primary);
+}
+
+.sidebar a:hover i, .sidebar a.active i {
+    color: var(--secondary);
+}
+
+/* General Buttons */
+.btn {
+    border-radius: var(--radius-md);
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: var(--secondary);
+    border: none;
+}
+.btn-primary:hover {
+    background: #005f99;
+}
+.btn-warning {
+    background: var(--accent);
+    color: var(--text-main);
+    border: none;
+}
+.btn-warning:hover {
+    background: var(--accent-hover);
+    color: var(--text-main);
+}
+
+/* Tables */
+.table th {
+    background: #f7f9fa !important;
+    color: var(--text-main) !important;
+    font-weight: 700;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.badge {
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-weight: 600;
+}
+
+/* Admin Stat Cards */
+.stat {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+}
